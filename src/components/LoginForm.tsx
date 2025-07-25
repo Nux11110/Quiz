@@ -1,14 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
 
-function RegisterForm() {
-  const [name, setName] = useState("");
+function LoginForm() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
@@ -19,15 +15,14 @@ function RegisterForm() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const finalData = {
-      name,
       email,
       password,
     };
 
     axios
-      .post("http://localhost:3000/users/create", finalData)
+      .post("http://localhost:3000/users/login", finalData)
       .then((response) => {
-        alert("User registered successfully!");
+        alert("User logged in successfully!");
       })
       .catch((error) => {
         console.log("error => ", error);
@@ -37,19 +32,9 @@ function RegisterForm() {
   };
   return (
     <>
-      <h1>Register Form</h1>
-      <p>Register to Continue</p>
+      <h1>Login Form</h1>
+      <p>Login to Continue</p>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            name="name"
-            placeholder="Enter your name"
-            value={name}
-            onChange={handleNameChange}
-          />
-        </div>
         <div>
           <label htmlFor="email">Email:</label>
           <input
@@ -71,9 +56,9 @@ function RegisterForm() {
           />
         </div>
 
-        <button type="submit">Register</button>
+        <button type="submit">Login</button>
       </form>
     </>
   );
 }
-export default RegisterForm;
+export default LoginForm;
