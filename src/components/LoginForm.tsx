@@ -1,9 +1,11 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext, type IAuthContext } from "../App";
 
 function LoginForm() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const { isAuth, setAuthState } = useContext<IAuthContext>(AuthContext);
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
@@ -24,7 +26,12 @@ function LoginForm() {
       .then((response) => {
         const token = response.data.accessToken;
         localStorage.setItem("accessToken", token);
-        alert("User logged in successfully!");
+
+        setAuthState((prev) => ({
+          ...prev,
+          isAuth: true,
+        }));
+        // alert("User logged in successfully!");
       })
       .catch((error) => {
         console.log("error => ", error);

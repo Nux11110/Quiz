@@ -1,11 +1,16 @@
 import { NavLink } from "react-router-dom";
+import { AuthContext, type IAuthContext } from "../App";
+import { useContext } from "react";
 
 function Navbar() {
-  const accessToken = localStorage.getItem("accessToken");
+  const { isAuth, setAuthState } = useContext<IAuthContext>(AuthContext);
 
   const logoutHandler = () => {
     localStorage.removeItem("accessToken");
-    alert("User logged out successfully!");
+    setAuthState((prev) => ({
+      ...prev,
+      isAuth: false,
+    }));
   };
 
   return (
@@ -13,7 +18,7 @@ function Navbar() {
       <nav>
         <NavLink to="/">Home</NavLink>
         <NavLink to="/about">About Us</NavLink>
-        {accessToken ? (
+        {isAuth ? (
           <>
             <NavLink to="/profile">Profile</NavLink>
             <button onClick={logoutHandler}>Logout</button>
