@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   FormProvider,
   useFieldArray,
@@ -9,8 +10,7 @@ interface QuestionSetForm {
   title: string;
   questions: {
     questionText: string;
-    correctAnswer: string;
-    choices: { text: string; label: string }[];
+    choices: { text: string; label: string; correctAnswer: boolean }[];
   }[];
 }
 
@@ -20,24 +20,38 @@ function CreateQuestionSetForm() {
     questions: [
       {
         questionText: "",
-        correctAnswer: "",
         choices: [],
       },
     ],
   };
 
   const methods = useForm({ defaultValues });
-  const { watch, register } = methods;
+  const { watch, register, handleSubmit } = methods;
   console.log("form values => ", watch());
+
+  const onSubmitHandler = (data: QuestionSetForm) => {
+    const accessToken = localStorage.getItem("accessToken");
+    axios
+      .post("http://localhost:3000/api/admin/questionset/create", data, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((res) => {
+        alert("Question Set Created Successfully");
+      })
+      .catch((err) => {});
+  };
   return (
     <div>
       <FormProvider {...methods}>
-        <form>
+        <form onSubmit={handleSubmit(onSubmitHandler)}>
           <div>
             <label>Enter Title</label>
             <input {...register("title")} placeholder="Enter Title" />
           </div>
           <CreateQuestions />
+          <button type="submit">Create QuestionSet</button>
         </form>
       </FormProvider>
     </div>
@@ -55,7 +69,6 @@ function CreateQuestions() {
   const AddQuestionHandler = () => {
     append({
       choices: [],
-      correctAnswer: "",
       questionText: "",
     });
   };
@@ -99,8 +112,9 @@ function CreateChoices({ questionIndex }: { questionIndex: number }) {
 
   const AddChoicesHandler = () => {
     append({
-      label: "",
+      label: fields?.length.toString(),
       text: "",
+      correctAnswer: false,
     });
   };
   return (
@@ -112,6 +126,12 @@ function CreateChoices({ questionIndex }: { questionIndex: number }) {
         return (
           <div key={index}>
             <input
+              type="checkbox"
+              {...register(
+                `questions.${questionIndex}.choices.${index}.correctAnswer`
+              )}
+            />
+            <input
               {...register(`questions.${questionIndex}.choices.${index}.text`)}
               placeholder="Enter Choice"
             />
@@ -122,7 +142,7 @@ function CreateChoices({ questionIndex }: { questionIndex: number }) {
         );
       })}
       <button type="button" onClick={AddChoicesHandler}>
-        Add Choicesss
+        Add Choices
       </button>
     </div>
   );
