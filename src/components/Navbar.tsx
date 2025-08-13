@@ -7,10 +7,7 @@ function Navbar() {
 
   const logoutHandler = () => {
     localStorage.removeItem("accessToken");
-    setAuthState((prev) => ({
-      ...prev,
-      isAuth: false,
-    }));
+    window.location.reload();
   };
 
   return (
@@ -21,6 +18,8 @@ function Navbar() {
         {isAuth ? (
           <>
             <NavLink to="/profile">Profile</NavLink>
+            <NavLink to="/questionset/list">QuestionSet</NavLink>
+
             <button onClick={logoutHandler}>Logout</button>
           </>
         ) : (

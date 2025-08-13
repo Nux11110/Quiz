@@ -26,11 +26,8 @@ function LoginForm() {
       .then((response) => {
         const token = response.data.accessToken;
         localStorage.setItem("accessToken", token);
+        window.location.href = "/";
 
-        setAuthState((prev) => ({
-          ...prev,
-          isAuth: true,
-        }));
         // alert("User logged in successfully!");
       })
       .catch((error) => {

@@ -6,7 +6,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 
-interface QuestionSetForm {
+export interface QuestionSetForm {
   title: string;
   questions: {
     questionText: string;
