@@ -21,6 +21,7 @@ function Navbar() {
         {isAuth ? (
           <>
             <NavLink to="/profile">Profile</NavLink>
+            <NavLink to="/questionset/list">QuestionSet</NavLink>
             <button onClick={logoutHandler}>Logout</button>
           </>
         ) : (
