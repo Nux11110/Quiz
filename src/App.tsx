@@ -11,7 +11,11 @@ import CreateQuestionSetPage from "./pages/QuestionSet/CreateQuestionSetPage";
 import { jwtDecode } from "jwt-decode";
 import ListQuestionSetPage from "./pages/QuestionSet/ListQuestionSetPage";
 import AttemptQuizPage from "./pages/QuestionSet/AttemptQuizPage";
+import { jwtDecode } from "jwt-decode";
+import ListQuestionSetPage from "./pages/QuestionSet/ListQuestionSetPage";
+import AttemptQuizPage from "./pages/QuestionSet/AttemptQuizPage";
 
+export interface IAuthState {
 export interface IAuthState {
   isAuth: boolean;
   role: "admin" | "professional" | "guest";
@@ -29,12 +33,15 @@ export interface JwtDecode {
 export const AuthContext = createContext<IAuthContext>({
   isAuth: false,
   role: "guest",
+  role: "guest",
   setAuthState: () => {},
 });
 
 function App() {
   const [authState, setAuthState] = useState<IAuthState>({
+  const [authState, setAuthState] = useState<IAuthState>({
     isAuth: false,
+    role: "guest",
     role: "guest",
   });
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -43,6 +50,7 @@ function App() {
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
+      setIsLoading(false);
       setIsLoading(false);
       return;
     }
@@ -61,7 +69,9 @@ function App() {
             ...prev,
             isAuth: true,
             role,
+            role,
           }));
+          setIsLoading(false);
           setIsLoading(false);
         })
         .catch((error) => {
@@ -81,11 +91,13 @@ function App() {
         value={{
           isAuth: authState.isAuth,
           role: authState.role,
+          role: authState.role,
           setAuthState: setAuthState,
         }}
       >
         <Navbar />
         <Routes>
+          {/* unauth */}
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutUsPage />} />
           {/* unauth */}

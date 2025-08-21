@@ -26,6 +26,7 @@ function LoginForm() {
       .then((response) => {
         const token = response.data.accessToken;
         localStorage.setItem("accessToken", token);
+        window.location.href = "/";
 
         window.location.href = "/";
         // alert("User logged in successfully!");

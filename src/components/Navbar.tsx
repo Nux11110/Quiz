@@ -7,10 +7,7 @@ function Navbar() {
 
   const logoutHandler = () => {
     localStorage.removeItem("accessToken");
-    setAuthState((prev) => ({
-      ...prev,
-      isAuth: false,
-    }));
+    window.location.reload();
   };
 
   return (
