@@ -75,6 +75,7 @@ function App() {
 
   if (isLoading) return <p>Loading...</p>;
 
+  console.log(authState.roleState)
   return (
     <>
       <AuthContext.Provider
@@ -104,10 +105,11 @@ function App() {
             <>
               <Route path="/profile" element={<ProfilePage />} />
 
+              {authState?.roleState !== "admin" && 
               <Route
                 path="/questionset/list"
                 element={<ListQuestionSetPage />}
-              />
+              />}
               <Route
                 path="questionset/:id/attempt"
                 element={<AttemptQuizPage />}

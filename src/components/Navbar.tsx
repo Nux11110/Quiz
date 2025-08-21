@@ -3,7 +3,7 @@ import { AuthContext, type IAuthContext } from "../App";
 import { useContext } from "react";
 
 function Navbar() {
-  const { isAuth, setAuthState } = useContext<IAuthContext>(AuthContext);
+  const { isAuth, setAuthState, roleState } = useContext<IAuthContext>(AuthContext);
 
   const logoutHandler = () => {
     localStorage.removeItem("accessToken");
@@ -18,7 +18,7 @@ function Navbar() {
         {isAuth ? (
           <>
             <NavLink to="/profile">Profile</NavLink>
-            <NavLink to="/questionset/list">QuestionSet</NavLink>
+            <NavLink to={roleState === "admin" ? "/admin/questionset/create" : "/questionset/list"}>QuestionSet</NavLink>
             <button onClick={logoutHandler}>Logout</button>
           </>
         ) : (

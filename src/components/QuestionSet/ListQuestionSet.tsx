@@ -43,7 +43,12 @@ function ListQuestionSet() {
   if (isLoading) {
     return <p>Loading...</p>;
   }
-  if (questionSets.length === 0) return <p>No question sets found.</p>;
+  if (questionSets.length === 0)
+    return(
+    <div>
+          <p>No Questions found.</p>
+          <button onClick={() => Navigate("/admin/questionset/create")}>Create New questions</button>
+    </div>)
 
   return (
     <div>

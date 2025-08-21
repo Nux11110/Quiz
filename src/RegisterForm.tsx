@@ -5,6 +5,7 @@ function RegisterForm() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState("");
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -14,6 +15,9 @@ function RegisterForm() {
   };
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
+  };
+  const handleRoleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRole(e.target.value);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -68,6 +72,16 @@ function RegisterForm() {
             placeholder="Enter your password"
             value={password}
             onChange={handlePasswordChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="name">Role:</label>
+          <input
+            type="text"
+            name="role"
+            placeholder="Enter your role"
+            value={role}
+            onChange={handleRoleChange}
           />
         </div>
 

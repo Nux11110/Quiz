@@ -30,6 +30,7 @@ function CreateQuestionSetForm() {
   console.log("form values => ", watch());
 
   const onSubmitHandler = (data: QuestionSetForm) => {
+    
     const accessToken = localStorage.getItem("accessToken");
     axios
       .post("http://localhost:3000/api/admin/questionset/create", data, {
@@ -42,6 +43,7 @@ function CreateQuestionSetForm() {
       })
       .catch((err) => {});
   };
+
   return (
     <div>
       <FormProvider {...methods}>
@@ -104,7 +106,7 @@ function CreateQuestions() {
 
 function CreateChoices({ questionIndex }: { questionIndex: number }) {
   const { register, control } = useFormContext<QuestionSetForm>();
-
+  console.log(register)
   const { fields, append, remove } = useFieldArray({
     control,
     name: `questions.${questionIndex}.choices`,
