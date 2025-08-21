@@ -10,7 +10,8 @@ function Navbar() {
     window.location.reload();
   };
 
-
+  console.log("hi")
+  
   return (
     <div>
       <nav>
