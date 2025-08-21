@@ -12,7 +12,6 @@ export default ListQuestionSetPage;
 
 import ListQuestionSet from "../../components/QuestionSet/ListQuestionSet";
 
-
 function ListQuestionSetPage() {
   return (
     <div>
